@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 import ApiError from "../error/ApiError";
 
-export default function (roles) {
+export default function (roles: string | any[]) {
   return function (req: Request, res: Response, next: NextFunction) {
     if (req.method === "OPTIONS") {
       next();
@@ -16,7 +16,7 @@ export default function (roles) {
       const { role: userRoles } = jwt.verify(token, process.env.JWT_SECRET);
 
       let hasRole = false;
-      userRoles.forEach((role) => {
+      userRoles.forEach((role: string) => {
         if (roles.includes(role)) {
           hasRole = true;
         }

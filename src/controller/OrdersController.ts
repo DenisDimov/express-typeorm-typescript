@@ -1,14 +1,14 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
 
-import ApiError from "../error/ApiError";
-import { Orders } from "../entities/Orders";
-import { User } from "../entities/User";
-import { Pizzeria } from "../entities/Pizzerias";
+import ApiError from '../error/ApiError';
+import { Orders } from '../entities/Orders';
+import { User } from '../entities/User';
+import { Pizzeria } from '../entities/Pizzerias';
 
 class Order {
   async ordersAll(_: Request, res: Response) {
     const orders = await Orders.find({
-      relations: ['pizzeria', 'user']
+      relations: ['pizzeria', 'user'],
     });
     return res.json(orders);
   }
@@ -16,10 +16,12 @@ class Order {
   async oneOrders(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
-      const oneOrder = await Orders.findOne(id, {relations: ['pizzeria', 'user']});
+      const oneOrder = await Orders.findOne(id, {
+        relations: ['pizzeria', 'user'],
+      });
       return res.json(oneOrder);
     } catch (error) {
-      next(ApiError.badRequest("sdf"));
+      next(ApiError.badRequest('sdf'));
     }
   }
 
@@ -43,7 +45,7 @@ class Order {
     } catch (error) {
       console.log(error);
 
-      next(ApiError.internal("Server error occured"));
+      next(ApiError.internal('Server error occured'));
     }
   }
 
@@ -57,7 +59,7 @@ class Order {
 
       return res.json(order);
     } catch (err) {
-      next(ApiError.badRequest("Server error occured"));
+      next(ApiError.badRequest('Server error occured'));
     }
   }
 
@@ -73,7 +75,7 @@ class Order {
 
       return res.json(order);
     } catch (error) {
-      next(ApiError.badRequest("Server error occured"));
+      next(ApiError.badRequest('Server error occured'));
     }
   }
 }
